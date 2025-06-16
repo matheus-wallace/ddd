@@ -1,10 +1,14 @@
 import { expect, test } from 'vitest';
-import { AnswerQuestionUseCase } from './answaer-question';
+import { AnswerQuestionUseCase } from './answer-question';
 
-test('should create an answer', () => {
+test('create an answer', () => {
   const answerQuestion = new AnswerQuestionUseCase();
 
-  const answaer = answerQuestion.execute({ questionId: '1', instructorId: '1', content: 'Nova resposta' });
+  const answer = answerQuestion.execute({
+    questionId: '1',
+    instructorId: '1',
+    content: 'Nova resposta',
+  });
 
-  expect(answaer.content).toEqual('Nova resposta');
+  expect(answer.content).toEqual('Nova resposta');
 });
