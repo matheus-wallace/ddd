@@ -1,4 +1,3 @@
-import { describe, expect, test } from "vitest"
 import { Slug } from "./slug"
 
   test('should create a slug from text', () => {
