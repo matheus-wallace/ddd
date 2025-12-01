@@ -1,8 +1,9 @@
+import { UniqueEntityID } from '../../core/entities/unique-entity-id';
 import { Answer } from '../entities/answer';
 
 interface AnswerQuestionUseCaseRequest {
-  instructorId: string;
-  questionId: string;
+  instructorId: UniqueEntityID;
+  questionId: UniqueEntityID;
   content: string;
 }
 
@@ -12,6 +13,7 @@ export class AnswerQuestionUseCase {
       content,
       authorId: instructorId,
       questionId,
+      createdAt: new Date()
     });
 
     return answer;
