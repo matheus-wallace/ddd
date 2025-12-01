@@ -1,13 +1,12 @@
-import { Entity } from '@/core/entities/entity';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { Optional } from '@/core/types/optional';
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 interface InstructorProps {
-  name: string;
+  name: string
 }
 export class Instructor extends Entity<InstructorProps> {
   static create(props: InstructorProps, id?: UniqueEntityID) {
-    const instructor = new Instructor(props, id);
-    return instructor;
+    const instructor = new Instructor(props, id)
+    return instructor
   }
 }
