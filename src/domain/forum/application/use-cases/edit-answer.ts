@@ -1,5 +1,5 @@
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
-import { AnswersRepository } from '../repository/answers-repository'
+import { AnswersRepository } from '../repositories/answers-repository'
 
 interface EditAnswerUseCaseRequest {
   authorId: string
