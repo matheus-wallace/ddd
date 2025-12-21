@@ -1,27 +1,23 @@
 import { EditQuestionUseCase } from './edit-question'
-
 import { makeQuestion } from 'test/factories/make-question'
-
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from '@/domain/forum/application/use-cases/errors/not-allowed-error'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repositories copy'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
-
 let sut: EditQuestionUseCase
 
 describe('Edit Question', () => {
   beforeEach(() => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
-
     sut = new EditQuestionUseCase(inMemoryQuestionsRepository)
   })
 
-  it('should be able to Edit a question', async () => {
+  it('should be able to edit a question', async () => {
     const newQuestion = makeQuestion(
       {
         authorId: new UniqueEntityID('author-1'),
       },
-
       new UniqueEntityID('question-1'),
     )
 
@@ -30,34 +26,34 @@ describe('Edit Question', () => {
     await sut.execute({
       questionId: newQuestion.id.toValue(),
       authorId: 'author-1',
-      title: 'question test',
-      content: 'content test',
+      title: 'Pergunta teste',
+      content: 'Conteúdo teste',
     })
 
     expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
-      title: 'question test',
-      content: 'content test',
+      title: 'Pergunta teste',
+      content: 'Conteúdo teste',
     })
   })
 
-  it('should not be able to Edit a question from another user', async () => {
+  it('should not be able to edit a question from another user', async () => {
     const newQuestion = makeQuestion(
       {
         authorId: new UniqueEntityID('author-1'),
       },
-
       new UniqueEntityID('question-1'),
     )
 
     await inMemoryQuestionsRepository.create(newQuestion)
 
-    await expect(() => {
-      return sut.execute({
-        questionId: newQuestion.id.toValue(),
-        authorId: 'author-2',
-        title: 'question test',
-        content: 'content test',
-      })
-    }).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      questionId: newQuestion.id.toValue(),
+      authorId: 'author-2',
+      title: 'Pergunta teste',
+      content: 'Conteúdo teste',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

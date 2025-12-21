@@ -1,6 +1,6 @@
 import { makeAnswer } from 'test/factories/make-answer'
-import { CommentOnAnswerUseCase } from './comment-on-answer'
 import { InMemoryAnswerCommentsRepository } from 'test/repositories/in-memory-answer-comments-repository'
+import { CommentOnAnswerUseCase } from '@/domain/forum/application/use-cases/comment-on-answer'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answaers-repositories'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
@@ -20,6 +20,7 @@ describe('Comment on Answer', () => {
 
   it('should be able to comment on answer', async () => {
     const answer = makeAnswer()
+
     await inMemoryAnswersRepository.create(answer)
 
     await sut.execute({

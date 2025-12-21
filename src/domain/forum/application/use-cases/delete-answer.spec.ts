@@ -1,16 +1,15 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { DeleteAnswerUseCase } from './delete-answer'
-import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answaers-repositories'
 import { makeAnswer } from 'test/factories/make-answer'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from '@/domain/forum/application/use-cases/errors/not-allowed-error'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answaers-repositories'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
-
 let sut: DeleteAnswerUseCase
 
 describe('Delete Answer', () => {
   beforeEach(() => {
     inMemoryAnswersRepository = new InMemoryAnswersRepository()
-
     sut = new DeleteAnswerUseCase(inMemoryAnswersRepository)
   })
 
@@ -19,7 +18,6 @@ describe('Delete Answer', () => {
       {
         authorId: new UniqueEntityID('author-1'),
       },
-
       new UniqueEntityID('answer-1'),
     )
 
@@ -38,18 +36,17 @@ describe('Delete Answer', () => {
       {
         authorId: new UniqueEntityID('author-1'),
       },
-
       new UniqueEntityID('answer-1'),
     )
 
     await inMemoryAnswersRepository.create(newAnswer)
 
-    await expect(() => {
-      return sut.execute({
-        answerId: 'answer-1',
+    const result = await sut.execute({
+      answerId: 'answer-1',
+      authorId: 'author-2',
+    })
 
-        authorId: 'author-2',
-      })
-    }).rejects.toBeInstanceOf(Error)
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

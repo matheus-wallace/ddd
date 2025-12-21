@@ -1,6 +1,6 @@
 import { makeQuestion } from 'test/factories/make-question'
-import { CommentOnQuestionUseCase } from './comment-on-question'
 import { InMemoryQuestionCommentsRepository } from 'test/repositories/in-memory-question-comments-repository'
+import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/comment-on-question'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repositories copy'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
@@ -12,6 +12,7 @@ describe('Comment on Question', () => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
     inMemoryQuestionCommentsRepository =
       new InMemoryQuestionCommentsRepository()
+
     sut = new CommentOnQuestionUseCase(
       inMemoryQuestionsRepository,
       inMemoryQuestionCommentsRepository,
@@ -20,7 +21,9 @@ describe('Comment on Question', () => {
 
   it('should be able to comment on question', async () => {
     const question = makeQuestion()
+
     await inMemoryQuestionsRepository.create(question)
+
     await sut.execute({
       questionId: question.id.toString(),
       authorId: question.authorId.toString(),
