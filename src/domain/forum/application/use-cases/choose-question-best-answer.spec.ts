@@ -3,7 +3,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/use-cases/choose-question-best-answer'
 import { makeQuestion } from 'test/factories/make-question'
 import { NotAllowedError } from '@/domain/forum/application/use-cases/errors/not-allowed-error'
-import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repositories copy'
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repositories'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answaers-repositories'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository

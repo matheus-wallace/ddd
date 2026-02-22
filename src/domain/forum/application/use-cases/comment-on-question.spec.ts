@@ -1,7 +1,7 @@
 import { makeQuestion } from 'test/factories/make-question'
 import { InMemoryQuestionCommentsRepository } from 'test/repositories/in-memory-question-comments-repository'
 import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/comment-on-question'
-import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repositories copy'
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repositories'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let inMemoryQuestionCommentsRepository: InMemoryQuestionCommentsRepository
