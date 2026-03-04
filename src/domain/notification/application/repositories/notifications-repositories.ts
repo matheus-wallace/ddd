@@ -1,5 +1,7 @@
-import { Notification } from '../../enterprise/entitites/notifications'
+import { Notification } from '../../enterprise/entitites/notification'
 
 export interface NotificationsRepository {
+  findByID(id: string): Promise<Notification | null>
   create(notification: Notification): Promise<void>
+  save(notification: Notification): Promise<void>
 }
